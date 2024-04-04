@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+    <title>Document</title>
+</head>
+<body>
+    <div id="nav">
+
+        <p id="title"></p>
+    </div>
+</body>
+<script>
+    const heading = document.getElementById('title');
+    async function logMovies() {
+        const response = await fetch("/getdata");
+        const data = await response.json();
+        let length = data.length-1
+        const name = data[length].author;
+        const action = data[length].action;
+        const branch = data[length].from_branch;
+        const time = data[length].timestamp;
+        heading.innerHTML = `${name} ${action} to ${branch} on ${time}`
+    }
+    setInterval(()=>{
+    logMovies();
+    },[15000])
+</script>
+</html>
